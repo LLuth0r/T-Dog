@@ -1,9 +1,13 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+Facility.destroy_all
+Court.destroy_all
+Camera.destroy_all
+
+f = Facility.create!(name: "Test Facility", slug: "test-facility")
+c = f.courts.create!(name: "Court 1", slug: "court-1")
+c.create_camera!(
+  rtsp_url: "rtsp://example.invalid/stream1",
+  onvif_url: "http://camera.invalid/onvif",
+  make: "Reolink", model: "Dummy"
+)
+
+puts "Seeded: facility=#{f.id} court=#{c.id} camera=#{c.camera.id}"
