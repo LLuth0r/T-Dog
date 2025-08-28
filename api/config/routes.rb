@@ -1,6 +1,10 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  get "sessions/create"
+  get "sessions/stop"
+  get "sessions/show"
+  get "sessions/presigned_download"
   mount Sidekiq::Web => "/admin/sidekiq"
   namespace :v1 do
     resources :facilities, only: [:index, :show]
