@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  get "recorders/heartbeat"
+  get "recorders/webhook"
   get "sessions/create"
   get "sessions/stop"
   get "sessions/show"
