@@ -1,6 +1,6 @@
 module V1
   class RecordersController < ApplicationController
-    before_action :authenticate_recorder!, only [:heartbeat, :webhook]
+    before_action :authenticate_recorder!, only: [:heartbeat, :webhook]
     
     def heartbeat
       render json: { ok: true, time: Time.now.utc }
