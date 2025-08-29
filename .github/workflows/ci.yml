@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        ports: ['5432:5432']
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379]
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+      REDIS_URL: redis://localhost:6379/0
+      JWT_SECRET: testsecret
+      AWS_ACCESS_KEY_ID: fake
+      AWS_SECRET_ACCESS_KEY: fake
+      S3_BUCKET: fake
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4.5
+          bundler-cache: true
+
+      - name: Set up Node + install Vite deps
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install Rails backend
+        working-directory: api
+        run: |
+          bundle install
+          cp config/database.yml.github config/database.yml || true
+          bin/rails db:prepare
+          bundle exec rake
+
+      - name: Install React frontend
+        working-directory: .
+        run: |
+          npm install
+          npm run build
