@@ -35,4 +35,5 @@ module V1
     def set_session
       @session = Session.find(params[:id])
     end
+  end
 end
