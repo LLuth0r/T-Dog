@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     resources :sessions do
         post :stop, on: :member
         get  :presigned_download, on: :member
-      end
     end
 
     resources :recorders, only: [] do
