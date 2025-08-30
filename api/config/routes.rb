@@ -8,10 +8,9 @@ Rails.application.routes.draw do
 
     resources :courts, only: [:index, :show]
 
-    resources :sessions, only: [:show, :create, :update] do
-      member do
-        post :stop
-        get  :presigned_download
+    resources :sessions do
+        post :stop, on: :member
+        get  :presigned_download, on: :member
       end
     end
 
