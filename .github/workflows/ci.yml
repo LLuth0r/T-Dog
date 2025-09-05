@@ -2,13 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:15
@@ -55,9 +55,12 @@ jobs:
         working-directory: api
         run: |
           bundle install
-          cp config/database.yml.github config/database.yml || true
-          bin/rails db:prepare
-          bundle exec rake
+          bin/rails db:drop db:create db:migrate RAILS_ENV=test
+
+      - name: Run tests
+        working-directory: api
+        run: |
+          bin/rails test
 
       - name: Install React frontend
         working-directory: .
