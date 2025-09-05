@@ -2,13 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:15
@@ -34,6 +34,7 @@ jobs:
       JWT_SECRET: testsecret
       AWS_ACCESS_KEY_ID: fake
       AWS_SECRET_ACCESS_KEY: fake
+      AWS_REGION: us-east-1
       S3_BUCKET: fake
 
     steps:
@@ -48,16 +49,19 @@ jobs:
       - name: Set up Node + install Vite deps
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22.12
           cache: 'npm'
 
       - name: Install Rails backend
         working-directory: api
         run: |
           bundle install
-          cp config/database.yml.github config/database.yml || true
-          bin/rails db:prepare
-          bundle exec rake
+          bin/rails db:drop db:create db:migrate RAILS_ENV=test
+
+      - name: Run tests
+        working-directory: api
+        run: |
+          bin/rails test
 
       - name: Install React frontend
         working-directory: .
