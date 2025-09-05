@@ -2,9 +2,10 @@ require "test_helper"
 
 class V1::SessionsControllerTest < ActionDispatch::IntegrationTest
   def setup
+    ENV['S3_BUCKET'] = 'test-bucket'
     f = Facility.create!(name: "F", slug: "f")
     @court = Court.create!(facility: f, name: "Court 1", slug: "court-1")
-    Camera.create!(court: @court, rtsp_url: "rtsp://example.invalid/stream1")
+    @camera = Camera.create!(court: @court, rtsp_url: "rtsp://example.invalid/stream1")
   end
 
   test "create" do
