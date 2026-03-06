@@ -1,9 +1,13 @@
 import './App.css'
 import AppRoutes from './routes/AppRoutes';
+import { CssVarsProvider } from '@mui/joy';
+import theme from './theme';
 
 const App = () => {
   return (
-    <AppRoutes />
+    <CssVarsProvider theme={theme}>
+      <AppRoutes />
+    </CssVarsProvider>
   )
 }
 
