@@ -7,7 +7,7 @@ module V1
         success_url: "#{ENV.fetch("APP_BASE_URL")}/payment/success?session_id={CHECKOUT_SESSION_ID}",
         cancel_url: "#{ENV.fetch("APP_BASE_URL")}/payment/cancel",
         metadata: {
-          user_contact: params[:user_contact],.to_s
+          user_contact: params[:user_contact].to_s,
         }
       )
       render json: { url: session.url }
