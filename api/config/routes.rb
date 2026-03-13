@@ -19,5 +19,11 @@ Rails.application.routes.draw do
         post :webhook # recorder events: started, segement_uploaded, clip_upload
       end
     end
+
+    resources :payments do
+      post "billing/checkout", to: "billing#checkout"
+    end
+
+    post "webhooks/stripe", to: "stripe_webhooks#create"
   end
 end
