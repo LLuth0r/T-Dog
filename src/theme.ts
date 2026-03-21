@@ -47,7 +47,7 @@ const theme = extendTheme({
           main: "#DFFF4F",
           light: "#F8FDF7",
           dark: "#2C2C2D",
-          background: "#38472F",
+          background: "#F9F9FB",
           contrastText: "#1E1F24",
         },
       },

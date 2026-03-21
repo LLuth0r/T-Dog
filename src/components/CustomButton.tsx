@@ -37,7 +37,7 @@ export const CustomButton: React.FC<ButtonProps> = ({ children, onClick, icon, c
                 alignItems: 'center',
                 justifyContent: 'center',
                 backgroundColor: color ?? theme.palette.primary['500'],
-                color: theme.palette.primary.contrastText,
+                color: theme.palette.primary.dark,
                 width: "75vw",
                 height: getSize(size ?? 'medium'),
                 margin: theme.spacing(2),

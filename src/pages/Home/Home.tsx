@@ -92,6 +92,10 @@ const Home: React.FC = () => {
                         >
                             <Typography
                                 level="body-md"
+                                sx={{
+                                    color: theme.palette.primary.dark,
+                                    fontWeight: "bold",
+                                }}
                             >
                                 Get Started
                             </Typography>

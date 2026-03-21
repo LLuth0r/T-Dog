@@ -5,7 +5,7 @@ import theme from './theme';
 
 const App = () => {
   return (
-    <CssVarsProvider theme={theme}>
+    <CssVarsProvider theme={theme} defaultMode="dark">
       <AppRoutes />
     </CssVarsProvider>
   )
