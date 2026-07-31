@@ -12,6 +12,6 @@ class S3Presigner
   end
 
   def self.presign_download(key, expires_in: 3600)
-    presigner.presigned_url(:get_object, bucket: ENV['S3_BUCKET'], key: key, expires_in: expires_in)
+    presigner.presigned_url(:get_object, bucket: ENV['AWS_S3_BUCKET_NAME'], key: key, expires_in: expires_in)
   end
 end
